@@ -3,7 +3,7 @@ const express = require("express");
 const app = express();
 
 // router불러오기
-const laundryRouter = require("./routes/laundies.routes");
+const laundryRouter = require("./routes/laundries.routes");
 
 // .env 사용
 // config() 설정이나 프로그램의 실행 일부 등을 저장해둔 파일.
