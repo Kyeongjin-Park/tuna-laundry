@@ -4,6 +4,7 @@ const app = express();
 
 // router불러오기
 const laundryRouter = require("./routes/laundries.routes");
+const userRouter = require("./routes/users.routes");
 
 // .env 사용
 // config() 설정이나 프로그램의 실행 일부 등을 저장해둔 파일.
@@ -21,6 +22,7 @@ app.get("/", (req, res) => {
 
 // laundry 페이지 이동
 app.use("/", [laundryRouter]);
+app.use("/", [userRouter]);
 
 
 
