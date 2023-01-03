@@ -2,6 +2,7 @@
 
 ### .env
 ```
+PORT = 8080
 MYSQL_AWS_USERNAME = root
 MYSQL_AWS_PASSWORD = (본인 RDS 비밀번호)
 MYSQL_AWS_DATABASE = tuna_laundry
