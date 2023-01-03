@@ -1,79 +1,81 @@
 const LaundryRepository = require("../repositories/laundries.repository");
-
 class LaundryService {
-  laundryRepository = new LaundryRepository();
-
-  // 세탁물 전체 보기
-  findAllLaundry = async() => {
-    const allLaundry = await this.laundryRepository.findAllLaundry();
-
-    allLaundry.sort((a,b) => {
-      return b.createdAt - a.createdAt
-    });
-
-    return allLaundry.map((laundry) => {
-      return {
-        laundryId: laundry.laundryId,
-      };
-    });
-  };
-
-  // 특정 세탁물 보기
-  findLaundryById = async(laundryId) => {
-    const findLaundry = await this.laundryRepository.findLaundryById(laundryId);
-
-    return {
-      laundryId: findLaundry.laundryId,
+    laundryRepository = new LaundryRepository()
+​
+    findAllLaundry = async () => {
+        const allLaundry = await this.laundryRepository.findAllLaundry()
+​
+        allLaundry.sort((a, b) => {
+            return b.updatedAt - a.updatedAt
+        })
+​
+        return allLaundry.map((laundry) => {
+            return {id: laundry.id,category: laundry.category,status: laundry.status,imageUrl: laundry.imageUrl,updatedAt: laundry.updatedAt,}
+        });
     };
-  };
-
-  // 세탁물 등록
-  createLaundry = async( inputDB ) => {
+​
+    findLaundryById = async (id) => {
+        const findLaundry = await this.laundryRepository.findLaundryById(id);
+​
+        return {id: findLaundry.id,category: findLaundry.category,content: findLaundry.content,status: findLaundry.status,imageUrl: findLaundry.imageUrl,updatedAt: findLaundry.updatedAt,};
+    };
+​
+    createLaundry = async (category,content,userId,status,imageUrl,phone) => {
     const createLaundryData = await this.laundryRepository.createLaundry(
-      "DB 입력",
+    nickname,
+    phone,
+    address,
+    imageUrl,
+    content,
+    category,
     );
-
+​
     return {
-      laundryId: createLaundryData.null,
+    laundryId: createLaundryData.null,
+    nickname: createLaundryData.nickname,
+    phone: createLaundryData.phone,
+    address: createLaundryData.address,
+    imageUrl: createLaundryData.imageUrl,
+    category: createLaundryData.category,
+    createdAt: createLaundryData.createdAt,
+    updatedAt: createLaundryData.updatedAt,
     };
-  };
-
-  // 세탁물 내용 변경
-  updateLaundry = async( inputDB ) => {
-    const findLaundry = await this.laundryRepository.findLaundryById(laundryId);
-    if (!findLaundry) throw new Error("세탁물이 존재하지 않습니다.");
-
-    await this.laundryRepository.updateLaundry(
-      "DB 입력"
-    );
-
-    const updateLaundry = await this.laundryRepository.findLaundryById(laundryId);
-
+    };
+​
+    updateLaundry = async (laundryId, password, title, content) => {
+    const findPost = await this.postRepository.findPostById(postId);
+    if (!findPost) throw new Error("Post doesn't exist");
+​
+    await this.postRepository.updatePost(postId, password, title, content);
+​
+    const updatePost = await this.postRepository.findPostById(postId);
+​
     return {
-      laundryId: updateLaundry.laundryId,
+    postId: updatePost.postId,
+    nickname: updatePost.nickname,
+    title: updatePost.title,
+    content: updatePost.content,
+    createdAt: updatePost.createdAt,
+    updatedAt: updatePost.updatedAt,
     };
-  };
-
-  // 세탁물 삭제
-  deleteLaundry = async( inputDB ) => {
-    const findLaundry = await this.laundryRepository.findLaundryById(laundryId);
-    if (!findLaundry) throw new Error("세탁물이 존재하지 않습니다.");
-
-    await this.laundryRepository.deleteLaundry(
-      "DB 입력"
-    );
-
-    const deleteLaundry = await this.laundryRepository.deleteLaundry(
-      laundryId,
-      password
-    );
-
+    };
+​
+    deletePost = async (postId, password) => {
+    const findPost = await this.postRepository.findPostById(postId);
+    if (!findPost) throw new Error("Post doesn't exist");
+​
+    await this.postRepository.deletePost(postId, password);
+​
     return {
-      laundryId: findLaundry.laundryId,
+    postId: findPost.postId,
+    nickname: findPost.nickname,
+    title: findPost.title,
+    content: findPost.content,
+    createdAt: findPost.createdAt,
+    updatedAt: findPost.updatedAt,
     };
-  };
-
-}
-
-
+    };
+    }
+​
+​
 module.exports = LaundryService;
