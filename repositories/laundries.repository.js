@@ -1,8 +1,10 @@
 const { Laundries } = require("../models");
+const { Users } = require("../models");
 class LaundryRepository{
     findAllLaundry = async () => {
         const laundries  = await Laundries.findAll();
-        return laundries
+        const users = await Users.findByPk(id);
+        return laundries,users
     }
     findLaundryById = async (id) => {
         const laundry = await Laundries.findByPk(id)
@@ -16,8 +18,8 @@ class LaundryRepository{
         const laundry = await Laundries.findByPk(id)
         return laundry
     }
-    updateLaundry = async (category,content,imageUrl) => {
-        const updateLaundryData = await Laundries.update({category,content,imageUrl,phone},{ where: { category,content,imageUrl,phone } });
+    updateLaundry = async (id,category,content,imageUrl,phone) => {
+        const updateLaundryData = await Laundries.update({category,content,imageUrl,phone},{ where: { id:id} });
         return updateLaundryData
     }
     deleteLaundry = async (id) => {

@@ -20,62 +20,34 @@ class LaundryService {
         return {id: findLaundry.id,category: findLaundry.category,content: findLaundry.content,status: findLaundry.status,imageUrl: findLaundry.imageUrl,updatedAt: findLaundry.updatedAt,};
     };
 ​
-    createLaundry = async (category,content,userId,status,imageUrl,phone) => {
-    const createLaundryData = await this.laundryRepository.createLaundry(
-    nickname,
-    phone,
-    address,
-    imageUrl,
-    content,
-    category,
-    );
-​
-    return {
-    laundryId: createLaundryData.null,
-    nickname: createLaundryData.nickname,
-    phone: createLaundryData.phone,
-    address: createLaundryData.address,
-    imageUrl: createLaundryData.imageUrl,
-    category: createLaundryData.category,
-    createdAt: createLaundryData.createdAt,
-    updatedAt: createLaundryData.updatedAt,
-    };
+    postLaundries = async (category,content,userId,status,imageUrl,phone) => {
+        const createLaundryData = await this.laundryRepository.createLaundry(category,content,userId,status,imageUrl,phone);
+        return {
+            id: createLaundryData.null,
+            nickname: createLaundryData.nickname,
+            phone: createLaundryData.phone,
+            address: createLaundryData.address,
+            imageUrl: createLaundryData.imageUrl,
+            category: createLaundryData.category,
+            createdAt: createLaundryData.createdAt,
+            updatedAt: createLaundryData.updatedAt,
+            userId: createLaundryData.userId
+        };
     };
 ​
-    updateLaundry = async (laundryId, password, title, content) => {
-    const findPost = await this.postRepository.findPostById(postId);
-    if (!findPost) throw new Error("Post doesn't exist");
-​
-    await this.postRepository.updatePost(postId, password, title, content);
-​
-    const updatePost = await this.postRepository.findPostById(postId);
-​
-    return {
-    postId: updatePost.postId,
-    nickname: updatePost.nickname,
-    title: updatePost.title,
-    content: updatePost.content,
-    createdAt: updatePost.createdAt,
-    updatedAt: updatePost.updatedAt,
+    updateLaundry = async (id,category,content,imageUrl,phone) => {
+        await this.laundryRepository.updateLaundry(id,category,content,imageUrl,phone);
+        const updateLaundry = await this.laundryRepository.findPostById(id);
+        return {
+            id: updateLaundry.id,
+            category: updateLaundry.category,
+            content: updateLaundry.content,
+            imageUrl: updateLaundry.imageUrl,
+            phone:updateLaundry.phone,
+            createdAt: updateLaundry.createdAt,
+            updatedAt: updateLaundry.updatedAt,
+        };
     };
-    };
-​
-    deletePost = async (postId, password) => {
-    const findPost = await this.postRepository.findPostById(postId);
-    if (!findPost) throw new Error("Post doesn't exist");
-​
-    await this.postRepository.deletePost(postId, password);
-​
-    return {
-    postId: findPost.postId,
-    nickname: findPost.nickname,
-    title: findPost.title,
-    content: findPost.content,
-    createdAt: findPost.createdAt,
-    updatedAt: findPost.updatedAt,
-    };
-    };
-    }
-​
+}
 ​
 module.exports = LaundryService;
