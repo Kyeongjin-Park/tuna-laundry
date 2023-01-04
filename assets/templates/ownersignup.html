@@ -18,12 +18,12 @@
     <div class="signin__card">
       <h2><strong>Welcome!</strong> 참치세탁소에 오신 것을 환영합니다.</h2>
       <form>
-        <input type="text" placeholder="아이디를 입력하세요." />
-        <input type="password" placeholder="비밀번호를 입력하세요." />
-        <input type="password" placeholder="비밀번호를 다시 입력하세요." />
-        <input type="tel" placeholder="휴대폰번호를 입력하세요." />
-        <input type="text" placeholder="업소명을 입력하세요." />
-        <input type="submit" value="가입완료" />
+        <input type="text" id="inputNickname" placeholder="아이디를 입력하세요." />
+        <input type="password" id="inputPassword1" placeholder="비밀번호를 입력하세요." />
+        <input type="password" id="inputPassword2" placeholder="비밀번호를 다시 입력하세요." />
+        <input type="tel" id="inputPhone" placeholder="휴대폰번호를 입력하세요." />
+        <input type="text" id="inputAddress" placeholder="업소명을 입력하세요." />
+        <input type="button" onclick="createOwner()" value="가입완료" />
         <p>
           * OPEN EVENT!!! * <br />
           가입 시 사업자 전원에게 수수료 면제.
@@ -35,5 +35,54 @@
     </div>
   </section>
 
+  <script
+      src="https://code.jquery.com/jquery-3.5.1.js"
+      integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+      integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"
+      integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      function createOwner() {
+        const nickname = $("#inputNickname").val();
+        const password1 = $("#inputPassword1").val();
+        const password2 = $("#inputPassword2").val();
+        const phone = $("#inputPhone").val();
+        const address = $("#inputAddress").val();
+        const status = 1;
+        const point = 0;
+
+        $.ajax({
+          type: "POST",
+          url: "/signup",
+          data: {
+            nickname: nickname,
+            password: password1,
+            confirmPassword: password2,
+            phone: phone,
+            address: address,
+            status: status,
+            point: point
+          },
+          success: function (response) {
+            alert("회원가입을 축하드립니다!", 
+              window.location.href = "/"
+            );
+          },
+          error: function (error) {
+            alert(error.responseJSON.errorMessage);
+          },
+        });
+      }
+      
+    </script>
 </body>
 </html>
