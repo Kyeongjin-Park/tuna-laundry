@@ -21,12 +21,11 @@ class LaundryBasketService {
     };
     deleteLaundryBasket = async (laundryId) => {
         await this.laundryBasketRepository.deleteLaundry(laundryId);
-        const LaundryBasketData = await this.laundryBasketRepository.findLaundryBasket(laundryId);
-
+        const findLaundryBasket = await this.laundryBasketRepository.findLaundryBasket(laundryId)
         return {
-            id: LaundryBasketData.id,
-            userId: LaundryBasketData.userId,
-            laundryId: LaundryBasketData.laundryId,
+            id: findLaundryBasket.id,
+            userId: findLaundryBasket.userId,
+            laundryId: findLaundryBasket.laundryId,
         }
     }
 }

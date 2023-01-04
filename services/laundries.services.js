@@ -12,12 +12,11 @@ class LaundryService {
             return {
                 id: laundry.id,
                 category: laundry.category,
-                content: laundry.content,
-                userId: laundry.userId,
-                createdAt: laundry.createdAt,
-                updatedAt: laundry.updatedAt,
                 status: laundry.status,
-                imageUrl: laundry.imageUrl
+                imageUrl: laundry.imageUrl,
+                createdAt:laundry.createdAt,
+                updatedAt: laundry.updatedAt,
+                userId:laundry.userId,
             }
         });
     };
@@ -32,90 +31,91 @@ class LaundryService {
             createdAt: findLaundry.createdAt,
             updatedAt: findLaundry.updatedAt,
             status: findLaundry.status,
-            imageUrl: findLaundry.imageUrl
+            imageUrl: findLaundry.imageUrl,
         };
     };
 
     createLaundries = async (category,content,userId,status,imageUrl) => {
-        const createLaundryData = await this.laundryRepository.createLaundry(category,content,userId,status,imageUrl);
+        const createLaundry = await this.laundryRepository.createLaundry(category,content,userId,status,imageUrl);
         return {
-            id: createLaundryData.null,
-            category: createLaundryData.category,
-            content: createLaundryData.content,
-            userId: createLaundryData.userId,
-            createdAt: createLaundryData.createdAt,
-            updatedAt: createLaundryData.updatedAt,
-            status: createLaundryData.status,
-            imageUrl: createLaundryData.imageUrl
+            id: createLaundry.null,
+            category: createLaundry.category,
+            content: createLaundry.content,
+            userId: createLaundry.userId,
+            createdAt: createLaundry.createdAt,
+            updatedAt: createLaundry.updatedAt,
+            status: createLaundry.status,
+            imageUrl: createLaundry.imageUrl
         };
     };
 
     updateLaundry = async (id,category,content,imageUrl) => {
         await this.laundryRepository.updateLaundry(id,category,content,imageUrl);
-        const updateLaundry = await this.laundryRepository.findPostById(id);
+        const findLaundry = await this.laundryRepository.findLaundryById(id);
         return {
-            id: updateLaundry.id,
-            category: updateLaundry.category,
-            content: updateLaundry.content,
-            userId: updateLaundry.userId,
-            createdAt: updateLaundry.createdAt,
-            updatedAt: updateLaundry.updatedAt,
-            status: updateLaundry.status,
-            imageUrl: updateLaundry.imageUrl
+            id: findLaundry.id,
+            category: findLaundry.category,
+            content: findLaundry.content,
+            userId: findLaundry.userId,
+            createdAt: findLaundry.createdAt,
+            updatedAt: findLaundry.updatedAt,
+            status: findLaundry.status,
+            imageUrl: findLaundry.imageUrl,
         };
     };
     deleteLaundry = async (id) => {
         await this.laundryRepository.updateLaundry(id);
-        const updateLaundry = await this.laundryRepository.findPostById(id);
+        const findLaundry = await this.laundryRepository.findLaundryById(id);
         return {
-            id: updateLaundry.id,
-            category: updateLaundry.category,
-            content: updateLaundry.content,
-            userId: updateLaundry.userId,
-            createdAt: updateLaundry.createdAt,
-            updatedAt: updateLaundry.updatedAt,
-            status: updateLaundry.status,
-            imageUrl: updateLaundry.imageUrl
+            id: findLaundry.id,
+            category: findLaundry.category,
+            content: findLaundry.content,
+            userId: findLaundry.userId,
+            createdAt: findLaundry.createdAt,
+            updatedAt: findLaundry.updatedAt,
+            status: findLaundry.status,
+            imageUrl: findLaundry.imageUrl,
         };
+        return
     }
     getAbleReivew = async (id,status) => {
-        const laundry = await this.laundryRepository.findAbleReview(id,status)
+        const findLaundry = await this.laundryRepository.findAbleReview(id,status)
         return {
-            id: laundry.id,
-            category: laundry.category,
-            content: laundry.content,
-            userId: laundry.userId,
-            createdAt: laundry.createdAt,
-            updatedAt: laundry.updatedAt,
-            status: laundry.status,
-            imageUrl: laundry.imageUrl
+            id: findLaundry.id,
+            category: findLaundry.category,
+            content: findLaundry.content,
+            userId: findLaundry.userId,
+            createdAt: findLaundry.createdAt,
+            updatedAt: findLaundry.updatedAt,
+            status: findLaundry.status,
+            imageUrl: findLaundry.imageUrl,
         }
     }
     getWaitingLaundries = async (status) => {
-        const laundries = await this.laundryRepository.findWaitingLaundries(status)
+        const findLaundry = await this.laundryRepository.findWaitingLaundries(status)
         return {
-            id: laundries.id,
-            category: laundries.category,
-            content: laundries.content,
-            userId: laundries.userId,
-            createdAt: laundries.createdAt,
-            updatedAt: laundries.updatedAt,
-            status: laundries.status,
-            imageUrl: laundries.imageUrl
+            id: findLaundry.id,
+            category: findLaundry.category,
+            content: findLaundry.content,
+            userId: findLaundry.userId,
+            createdAt: findLaundry.createdAt,
+            updatedAt: findLaundry.updatedAt,
+            status: findLaundry.status,
+            imageUrl: findLaundry.imageUrl,
         }
     }
     updateLaundryStatus = async (laundryId,status) => {
-        const updateLaundry = await this.laundryRepository.findPostById(laundryId);
+        const findLaundry = await this.laundryRepository.findWaitingLaundries(status)
         await this.laundryRepository.updateLaundryStatus(laundryId,status);
         return {
-            id: updateLaundry.id,
-            category: updateLaundry.category,
-            content: updateLaundry.content,
-            userId: updateLaundry.userId,
-            createdAt: updateLaundry.createdAt,
-            updatedAt: updateLaundry.updatedAt,
-            status: updateLaundry.status,
-            imageUrl: updateLaundry.imageUrl
+            id: findLaundry.id,
+            category: findLaundry.category,
+            content: findLaundry.content,
+            userId: findLaundry.userId,
+            createdAt: findLaundry.createdAt,
+            updatedAt: findLaundry.updatedAt,
+            status: findLaundry.status,
+            imageUrl: findLaundry.imageUrl,
         }
     }
 }
