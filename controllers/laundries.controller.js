@@ -1,18 +1,8 @@
 const LaundryService = require("../services/laundries.services");
 
-
-// Laundry의 컨트롤러 역할을 하는 클래스
 class LaundriesController {
-  LaundryService = new LaundryService(); // Laundry 서비스 클래스를 컨트롤러 클래스의 멤버 변수로 할당.
-  getUser = async(req,res,next) => {
-    const {userId} = res.local.user
-    try{
-      const user = await this.LaundryService.findUser(userId)
-      res.json({data:user})
-    }catch(error){
-      res.status(401).send({errorMessage:error})
-    }
-  }
+  LaundryService = new LaundryService();
+  //손님
   getLaundries = async(req, res, next) => {
     const {userId} = res.local.user
     try {
@@ -32,14 +22,13 @@ class LaundriesController {
       res.status(401).send({errorMessage:error})
     }
   }
-  getadminLaundryById
-  postLaundry = async(req, res, next) => {
+  createLaundry = async(req, res, next) => {
     const {userId} = res.local.user
     //로그인 방식에 따라 달라질 수 있음
     const {category,content,status,imageUrl} = req.body
     try {
-      const postLaundryData = await this.LaundryService.postLaundries(category,content,status,imageUrl,userId)
-      res.json({data : postLaundryData})
+      const createLaundryData = await this.LaundryService.createLaundries(category,content,status,imageUrl,userId)
+      res.json({data : createLaundryData})
     } catch (error) {
       res.status(401).send({errorMessage:error})
     }
@@ -62,6 +51,61 @@ class LaundriesController {
       const deleteLaundryData = await this.LaundryService.deleteLaundries(laundryId)
       res.json({data : deleteLaundryData})
     } catch (error) {
+      res.status(401).send({errorMessage:error})
+    }
+  }
+
+  getAbleReview = async(req,res,next)=>{
+    const {userId} = res.local.user
+    const status = "배송 완료"
+    try {
+      const laundries = await this.LaundryService.findAllLaundry(userId,status)
+      res.json({data:laundries})
+    } catch (error) {
+      res.status(401).send({errorMessage:error})
+    }
+  }
+
+  //사장님
+  getWaitingLaundries = async(req,res,next) => {
+    const status = "대기 중"
+    try{
+      const laundry = await this.LaundryService.findWaitingLaundry(status)
+      res.json({data:laundry})
+    }catch(error){
+      res.status(401).send({errorMessage:error})
+    }
+  }
+  getWaitingLaundryById = async(req,res,next) => {
+    const {laundryId} = req.params
+    try{
+      const laundry = await this.LaundryService.findLaundryById(laundryId)
+      res.json({data:laundry})
+    }catch(error){
+      res.status(401).send({errorMessage:error})
+    }
+  }
+  updateLaundryStatus = async(req,res,next)=>{
+    const {laundryId} = req.params
+    // let status = ""
+    const {status} = req.body
+    try{
+      // const laundryStatus = await this.LaundryService.findLaundryById(laundryId)
+      // if(laundryStatus==="대기 중"){
+      //   status = "수거 중"
+      // }
+      // if(laundryStatus==="수거 중"){
+      //   status = "수거 완료"
+      // }
+      // if(laundryStatus==="수거 완료"){
+      //   status = "배송 중"
+      // }
+      // if(laundryStatus==="배송 중"){
+      //   status = "배송 완료"
+      // }
+      const laundry = await this.LaundryService.updateLaundryStatus(laundryId,status)
+      res.json({data:laundry})
+    }catch(error){
       res.status(401).send({errorMessage:error})
     }
   }

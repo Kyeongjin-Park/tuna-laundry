@@ -1,12 +1,9 @@
 const { Laundries } = require("../models");
-const { Laundrybasket } = require("../models");
 
 class LaundryRepository{
-    constructor(laundriesModel){
-        this.laundriesModel = laundriesModel
-    }
+
     findAllLaundry = async (id) => {
-        const laundries  = await Laundries.findAll({where:{id:id}});
+        const laundries  = await Laundries.findAll({where:{id}});
         return laundries
     }
 
@@ -28,6 +25,19 @@ class LaundryRepository{
     deleteLaundry = async (id) => {
         const updateLaundryData = await Laundries.destroy({where:{id}})
         return updateLaundryData
+    }
+
+    findAbleReview = async (id,status) => {
+        const laundries = await Laundries.findAll({where:{id,status}})
+        return laundries
+    }
+    findWaitingLaundries = async (status) => {
+        const laundries = await Laundries.findAll({where:{status}})
+        return laundries
+    }
+    updateLaundryStatus = async (laundryId,status) => {
+        const updatingLaundryStatus = await Laundries.update({status},{where:{laundryId}})
+        return updatingLaundryStatus
     }
 }
 
