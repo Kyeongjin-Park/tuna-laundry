@@ -1,0 +1,17 @@
+body .topnav {
+  background-color: skyblue;
+
+}
+body .topnav .nav-link {
+  padding-top: 5px;
+  color: white;
+}
+body .topnav .nav-link:hover{
+  padding-top: 12px;
+  color: royalblue;
+}
+
+body .topnav .na-active {
+  padding-top: 12px;
+  color: darkblue;
+}
