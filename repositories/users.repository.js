@@ -9,16 +9,23 @@ class UserRepository {
   }
 
   findOneUser = async () => {
-    // ORM인 Sequelize에서 Posts 모델의 findAll 메소드를 사용해 데이터를 요청합니다.
+    
     const user = await user.findOne();
     return user;
   }
 
-  createUser = async (nickname, password, confirmPassword, phone, address) => {
+  createUser = async (nickname, password, phone, address, status, point) => {
     // ORM인 Sequelize에서 Posts 모델의 create 메소드를 사용해 데이터를 요청합니다.
-    const createUserData = await User.create({ nickname, password, confirmPassword, phone, address });
+    const createUserData = await User.create({ nickname, password, phone, address, status, point });
 
     return createUserData;
+  }
+
+  updateUser = async (nickname, password, phone, address, status, point) => {
+    
+    const updateUserData = await User.update({ nickname, password, phone, address, status, point });
+
+    return updateUserData;
   }
 }
 
