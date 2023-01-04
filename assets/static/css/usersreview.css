@@ -1,6 +1,5 @@
 body .topnav {
   background-color: skyblue;
-
 }
 body .topnav .nav-link {
   padding-top: 5px;
@@ -9,40 +8,22 @@ body .topnav .nav-link {
 body .topnav .nav-link:hover{
   color: royalblue;
 }
-
 body .topnav .nav .na-active {
   background-color: #f6f5ef;
   color: royalblue;
 }
 
-
-body .myinfo {
+body .review {
   background-color: #f6f5ef;
-  height: 300px;
+  height: 1000px;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
-
 }
-body .myinfo .infobox {
-  background-color: royalblue;
-  width: 30%;
+body .review .usersreview {
+  /* background-color: blue; */
   height: 80%;
-  position: absolute;
-}
-
-
-body .laundryinfo {
-  background-color: #f6f5ef;
-  height: 700px;
-  display: flex;
-  justify-content: center;
-  position: relative;
-}
-
-body .laundryinfo .list-group {
   width: 80%;
   position: absolute;
-  border-radius: 10px;
 }
