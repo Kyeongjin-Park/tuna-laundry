@@ -21,20 +21,16 @@
       <form>
         <input type="text" placeholder="아이디를 입력하세요." />
         <input type="password" placeholder="비밀번호를 입력하세요." />
-        <button
-                type="button"
-                onclick="sign_in()"
-        >
-                로그인
-        </button>
-        <input type="submit" value="사업자 로그인" />
+        <input type="submit" onclick="sign_in()" value="로그인" />
+        <input type="submit" onclick="sign_in()" value="사업자 로그인" />
         <p>
           * 비밀번호를 타 사이트와 같이 사용할 경우 도용 위험이 있으니,<br />
           정기적으로 비밀번호를 변경하세요!
         </p>
       </form>
       <div class="actions">
-        <a href="/signup">회원가입</a>
+        <a href="/usersignup">회원가입</a>
+        <a href="/ownersignup">사업자 회원가입</a>
       </div>
     </div>
   </section>
