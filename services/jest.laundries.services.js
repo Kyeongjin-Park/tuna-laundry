@@ -1,7 +1,7 @@
-const LaundryRepository = require("../repositories/laundries.repository");
-
+const LaundryRepository = require("../repositories/jest.laundries.repository");
+const { Laundries } = require("../models")
 class LaundryService {
-    laundryRepository = new LaundryRepository()
+    laundryRepository = new LaundryRepository(Laundries)
 
     findAllLaundry = async (id) => {
         const allLaundry = await this.laundryRepository.findAllLaundry(id)
