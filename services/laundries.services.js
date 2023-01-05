@@ -12,6 +12,7 @@ class LaundryService {
             return {
                 id: laundry.id,
                 category: laundry.category,
+                content: laundry.content,
                 status: laundry.status,
                 imageUrl: laundry.imageUrl,
                 createdAt:laundry.createdAt,

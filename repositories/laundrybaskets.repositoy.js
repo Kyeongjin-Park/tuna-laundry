@@ -1,19 +1,22 @@
-const { LaundryBaskets } = require("../models");
+const { LaundryBasket } = require("../models");
 
 class LaundryBasketRepository{
-
+    // findAllLaundrybasket = async()=>{
+    //     const laundrybasket = await LaundryBasket.findAll()
+    //     return laundrybasket
+    // }
     findLaundry = async(laundryId)=>{
-        const laundry = await LaundryBaskets.findAll({where:{laundryId}});
+        const laundry = await LaundryBasket.findAll({where:{laundryId}});
         return laundry
     }
 
     createLaundryBasket = async(userId,laundryId) =>{
-        const createLaundryBasketData = await LaundryBaskets.create({userId,laundryId})
+        const createLaundryBasketData = await LaundryBasket.create({userId,laundryId})
         return createLaundryBasketData
     }
 
     deleteLaundryBasket = async(laundryId)=>{
-        const updateLaundryBasketData = await LaundryBaskets.destroy({where:{laundryId}})
+        const updateLaundryBasketData = await LaundryBasket.destroy({where:{laundryId}})
         return updateLaundryBasketData
     }
 }

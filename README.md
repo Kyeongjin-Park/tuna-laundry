@@ -13,6 +13,7 @@ MYSQL_AWS_HOST = (본인 RDS 주소)
 ```
 node_modules
 .env
+config.json
 ```
 
 

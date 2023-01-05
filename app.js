@@ -6,6 +6,7 @@ const app = express();
 
 // router불러오기
 const userRouter = require("./routes/users.routes");
+const laundryRouter = require("./routes/laundries.routes")
 app.use("/", express.urlencoded({ extended: false }), router);
 // .env 사용
 // config() 설정이나 프로그램의 실행 일부 등을 저장해둔 파일.
@@ -22,7 +23,7 @@ app.use(express.static(__dirname + "/assets"));
 //   res.send("./assets/templates/login.html");
 // });
 app.get("/", function(req, res) {
-    res.sendFile( __dirname + "/assets/templates/login.html");
+    res.sendFile( __dirname + "/assets/templates/userslaundry.html");
 });
 app.get("/usersignup", function(req, res) {
     res.sendFile( __dirname + "/assets/templates/usersignup.html");
@@ -34,7 +35,7 @@ app.get("/usersmypage", function(req, res) {
     res.sendFile( __dirname + "/assets/templates/usersmypage.html");
 });
 
-
+app.use("/", [laundryRouter])
 app.use("/", [userRouter]);
 
 

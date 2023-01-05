@@ -2,7 +2,16 @@ const LaundryBasketRepository = require("../repositories/laundrybaskets.reposito
 
 class LaundryBasketService {
     laundryBasketRepository = new LaundryBasketRepository()
-
+    // findAllLaundryBasket = async() => {
+    //     const AllLaundryBasket = await this.laundryBasketRepository.findAllLaundryBasket()
+    //     return AllLaundryBasket.map((laundryBasket) => {
+    //         return {
+    //             id: laundryBasket.id,
+    //             userId:laundryBasket.userId,
+    //             laundryId:laundryBasket.laundryId
+    //         }
+    //     });
+    // }
     findLaundryBasket = async(id) => {
         const findLaundryBasket = await this.laundryBasketRepository.findLaundryBasket(id)
         return {

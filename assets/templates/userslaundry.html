@@ -7,8 +7,49 @@
   <title>참치세탁소 - 고객용</title>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
   <link rel="stylesheet" href="../static/css/userslaundry.css">
-
+  <script>
+    $(document).ready(function(){
+      getMyLaundry()
+      getMyInfo()
+    })
+    function getMyLaundry(){
+      $('#laundryinfo').empty()
+      $.ajax({
+        type:"GET",
+        url:"/mylaundry/"+userId,
+        data:{},
+        success:function(response){
+          rows = response.data
+          for(let i = 0; i<rows.length;i++) {
+                        let laundryId = rows[i]['id']
+                        let content = rows[i]['content']
+                        let updateDate = rows[i]['updatedAt']
+                        let createDate = rows[i]['createdAt']
+                        let status = rows[i]['status']
+                        let temp_html = `<li class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+          <div>${content}</div> 
+          <div>업데이트일 : ${updateDate}</div>
+          <div>신청일 : ${createDate}</div>
+        </div>
+        <span class="badge bg-primary rounded-pill">${status}</span>
+      </li>`
+                        $('#laundryinfo').append(temp_html)
+                    }
+        }
+      })
+    }
+    // function getMyInfo(){
+    //   $('#myInfo').empty()
+    //   let userId = 1
+    //   $.ajax({
+    //     type:"GET",
+    //     url:"/"
+    //   })
+    // }
+  </script>
 </head>
 <body>
   <section class="topnav">
@@ -42,7 +83,7 @@
         <div class="card-header">
           사용자 정보
         </div>
-        <ul class="list-group list-group-flush">
+        <ul class="list-group list-group-flush" id = "myInfo">
           <li class="list-group-item">닉네임 : 마구로 사장님</li>
           <li class="list-group-item">포인트 : 560,000</li>
           <li class="list-group-item">업소명 : 원데이 참치 세탁소</li>
@@ -53,7 +94,7 @@
   </section>
 
   <section class="laundryinfo">
-    <ol class="list-group list-group-numbered">
+    <ol class="list-group list-group-numbered" id="laundryinfo">
       <li class="list-group-item d-flex justify-content-between align-items-start">
         <div class="ms-2 me-auto">
           <div class="fw-bold">마구로 사장님</div>

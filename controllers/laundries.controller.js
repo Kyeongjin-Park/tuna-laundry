@@ -4,7 +4,8 @@ class LaundriesController {
   LaundryService = new LaundryService();
   //손님
   getLaundries = async(req, res, next) => {
-    const {userId} = res.local.user
+    // const {userId} = res.local.user
+    const {userId} = req.params
     try {
       const laundries = await this.LaundryService.findAllLaundry(userId)
       res.json({data:laundries})
@@ -27,8 +28,8 @@ class LaundriesController {
     // 로그인 방식에 따라 달라질 수 있음
     const {category,content,status,imageUrl} = req.body
     try {
-      const createLaundryData = await this.LaundryService.createLaundries(category,content,status,imageUrl,userId)
-      res.json({data : createLaundryData})
+      await this.LaundryService.createLaundries(category,content,status,imageUrl,userId)
+      res.status(201).json({message:"세탁물 등록 성공"})
     } catch (error) {
       res.status(401).send({errorMessage:error})
     }

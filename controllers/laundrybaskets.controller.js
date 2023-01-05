@@ -2,7 +2,10 @@ const LaundryBasketService = require("../services/laundrybaskets.services");
 
 class LaundryBasketsController {
   LaundryBasketService = new LaundryBasketService();
-
+  // getAllLaundryBasket = async(req,res,next) => {
+  //   const laundrybasket = await this.LaundryBasketService.findAllLaundryBasket()
+  //   res.json({data:laundrybasket})
+  // }
   getLaundryBasket = async(req,res,next) =>{
     const {userId} = res.local.user
     try{
