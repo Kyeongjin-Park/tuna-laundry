@@ -35,7 +35,10 @@ app.get("/usersmypage", function(req, res) {
     res.sendFile( __dirname + "/assets/templates/usersmypage.html");
 });
 
+<<<<<<< HEAD
 app.use("/", [laundryRouter])
+=======
+>>>>>>> 744dfa0bf31f032bbabd015929f3ae420479313b
 app.use("/", [userRouter]);
 
 
