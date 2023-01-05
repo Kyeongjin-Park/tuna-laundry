@@ -8,7 +8,7 @@ class HostReviewController {
 
   getHost = async (req, res, next) => {
     
-    const {userId} = res.local.user
+    const {userId} = res.body
     try{
       const user = await this.HostReviewService.findUser(userId)
       res.json({data:user})
@@ -18,16 +18,16 @@ class HostReviewController {
   }
 
   getLaundryById = async (req, res, next) => {
-    const { laundryId } = req.params
+    const { laundryId } = req.parms
     //프론트에서 getLaundries한 것들을 clickable하게 해놓은 후 onclick = "somekindsoffunction(laundryId)" 라고하고 보내주면 params로 받을 수 있겠다.
+    
     try {
       const laundry = await this.HostReviewService.findLaundryById(laundryId)
-      res.json({data:laundry})
+    if(laundry.length > 0)
+       return res.json({data:laundry})
     } catch (error) {
-      res.status(401).send({errorMessage:error})
+      return res.status(401).send({errorMessage:error})
     }
-
-    res.status(200).json({ data: user })
   }
 }
 
