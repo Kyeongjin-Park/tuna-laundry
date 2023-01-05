@@ -1,5 +1,6 @@
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
   
 
 
@@ -407,6 +408,8 @@
 
 }
 =======
+=======
+>>>>>>> 744dfa0bf31f032bbabd015929f3ae420479313b
   "name": "tuna-laundry",
   "version": "1.0.0",
   "description": "### .env ``` PORT = 8080 MYSQL_AWS_USERNAME = root MYSQL_AWS_PASSWORD = (본인 RDS 비밀번호) MYSQL_AWS_DATABASE = tuna_laundry MYSQL_AWS_HOST = (본인 RDS 주소) ```",
@@ -444,5 +447,8 @@
     "url": "https://github.com/Kyeongjin-Park/tuna-laundry/issues"
   },
   "homepage": "https://github.com/Kyeongjin-Park/tuna-laundry#readme"
+<<<<<<< HEAD
+>>>>>>> 744dfa0bf31f032bbabd015929f3ae420479313b
+=======
 >>>>>>> 744dfa0bf31f032bbabd015929f3ae420479313b
 }

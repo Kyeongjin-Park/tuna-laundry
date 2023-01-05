@@ -36,7 +36,10 @@ app.get("/usersmypage", function(req, res) {
 });
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 app.use("/", [laundryRouter])
+=======
+>>>>>>> 744dfa0bf31f032bbabd015929f3ae420479313b
 =======
 >>>>>>> 744dfa0bf31f032bbabd015929f3ae420479313b
 app.use("/", [userRouter]);
