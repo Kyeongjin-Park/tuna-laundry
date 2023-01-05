@@ -1,11 +1,12 @@
 // 패키지 불러오기
 const express = require("express");
+const router = express.Router();
 const app = express();
 
 
 // router불러오기
 const userRouter = require("./routes/users.routes");
-
+app.use("/", express.urlencoded({ extended: false }), router);
 // .env 사용
 // config() 설정이나 프로그램의 실행 일부 등을 저장해둔 파일.
 require("dotenv").config();

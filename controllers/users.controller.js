@@ -18,8 +18,7 @@ class UsersController {
       }
     
       const existUsers = await this.UserService.findAllUser();
-      
-      if (existUsers) {
+      if (existUsers.includes(nickname)) {
         res.status(400).send({
           errorMessage: "이미 가입된 닉네임이 있습니다.",
         });
