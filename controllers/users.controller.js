@@ -17,13 +17,13 @@ class UsersController {
         return;
       }
     
-      const existUsers = await this.UserService.findAllUser();
-      if (existUsers.length) {
-        res.status(400).send({
-          errorMessage: "이미 가입된 닉네임이 있습니다.",
-        });
-        return;
-      }
+      // const existUsers = await this.UserService.findAllUser();
+      // if (existUsers.length) {
+      //   res.status(400).send({
+      //     errorMessage: "이미 가입된 닉네임이 있습니다.",
+      //   });
+      //   return;
+      // }
 
     // 서비스 계층에 구현된 createPost 로직을 실행합니다.
     const createUserData = await this.UserService.createUser(nickname, password, phone, address, status, point);
@@ -36,14 +36,14 @@ class UsersController {
 
     const user = await this.UserService.findOneUser();
 
-  if (!user || password !== user.password || status !== 0) {
-    res.status(400).send({
-      errorMessage: "닉네임 또는 패스워드가 잘못됐습니다.",
-    });
-    return;
-  }
+    // if ( password !== user.password ) {
+    //   res.status(400).send({
+    //     errorMessage: "닉네임 또는 패스워드가 잘못됐습니다.",
+    //   });
+    //   return;
+    // }
 
-    const token = jwt.sign({ userId: user.userId }, "customized-secret-key");
+    const token = jwt.sign({ userId: user.id }, "customized-secret-key");
     console.log(token);
     res.send({
         token,
