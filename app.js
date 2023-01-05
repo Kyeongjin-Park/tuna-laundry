@@ -1,13 +1,11 @@
 // 패키지 불러오기
 const express = require("express");
-const router = express.Router();
 const app = express();
-
+app.use(express.urlencoded({ extended: false }));
 
 // router불러오기
 const userRouter = require("./routes/users.routes");
 const laundryRouter = require("./routes/laundries.routes")
-app.use("/", express.urlencoded({ extended: false }), router);
 // .env 사용
 // config() 설정이나 프로그램의 실행 일부 등을 저장해둔 파일.
 require("dotenv").config();
@@ -38,6 +36,7 @@ app.get("/usersmypage", function(req, res) {
 app.use("/", [laundryRouter])
 app.use("/", [userRouter]);
 
+app.use("/", [userRouter, laundryRouter]);
 
 
 
@@ -45,3 +44,6 @@ app.use("/", [userRouter]);
 app.listen(process.env.PORT, () => {
   console.log(`http://127.0.0.1:${process.env.PORT}`);
 });
+
+
+

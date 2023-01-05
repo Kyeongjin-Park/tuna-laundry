@@ -16,6 +16,11 @@ node_modules
 config.json
 ```
 
+### 마지막에 terminal에 입력할 것
+```
+npx sequelize db:migrate
+```
+
 ### config/config.json
 ```
 {
