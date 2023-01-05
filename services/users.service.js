@@ -6,25 +6,27 @@ class UserService {
 
   findAllUser = async (nickname) => {
     // 저장소(Repository)에게 데이터를 요청합니다.
-    const allUser = await this.userRepository.findAllUser({ where: { nickname } });
+    const allUser = await this.userRepository.findAllUser( nickname );
 
     // 비즈니스 로직을 수행한 후 사용자에게 보여줄 데이터를 가공합니다.
+    return allUser.map(user => {
       return {
-        id: allUser.id,
-        nickname: allUser.nickname,
-        password: allUser.password,
-        phone: allUser.phone,
-        address: allUser.address,
-        status: allUser.status,
-        point: allUser.point
+        id: user.id,
+        nickname: user.nickname,
+        password: user.password,
+        phone: user.phone,
+        address: user.address,
+        status: user.status,
+        point: user.point
       }
-    ;
-
+  });
   }
 
   findOneUser = async (nickname, password) => {
     
-    const oneUser = await this.userRepository.findOneUser({ where: { nickname, password } });
+    const oneUser = await this.userRepository.findOneUser(nickname, password);
+
+    
       return {
         id: oneUser.id,
         nickname: oneUser.nickname,
@@ -33,8 +35,7 @@ class UserService {
         address: oneUser.address,
         status: oneUser.status,
         point: oneUser.point
-      }
-    ;
+      };
   }
 
   createUser = async (nickname, password, phone, address, status, point) => {
