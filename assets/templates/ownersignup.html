@@ -7,28 +7,26 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
   <title>회원가입</title>
 
-  <link rel="stylesheet" href="../static/css/signup.css">
-  <script defer src="../static/js/login.js"></script>
+  <link rel="stylesheet" href="../static/css/ownersignup.css">
 
 </head>
 <body>
 
   <!-- LOG IN -->
   <section class="signin">
-    <h1>회원가입</h1>
+    <h1>사업자 회원가입</h1>
     <div class="signin__card">
       <h2><strong>Welcome!</strong> 참치세탁소에 오신 것을 환영합니다.</h2>
       <form>
-        <input type="text" placeholder="아이디를 입력하세요." />
-        <input type="password" placeholder="비밀번호를 입력하세요." />
-        <input type="password" placeholder="비밀번호를 다시 입력하세요." />
-        <input type="tel" placeholder="휴대폰번호를 입력하세요." />
-        <input type="text" placeholder="주소를 입력하세요. (상세 입력)" />
-        <input type="submit" onclick="createUser()" value="고객님 가입완료" />
-        <input type="submit-admin" value="사장님 가입완료" />
+        <input type="text" id="inputNickname" placeholder="아이디를 입력하세요." />
+        <input type="password" id="inputPassword1" placeholder="비밀번호를 입력하세요." />
+        <input type="password" id="inputPassword2" placeholder="비밀번호를 다시 입력하세요." />
+        <input type="tel" id="inputPhone" placeholder="휴대폰번호를 입력하세요." />
+        <input type="text" id="inputAddress" placeholder="업소명을 입력하세요." />
+        <input type="button" onclick="createOwner()" value="가입완료" />
         <p>
-          * 관리자 로그인은 기능이 다르니,<br />
-          세탁소 영업을 하는 사장님께서만 "사장님 가입완료"를 클릭하세요!
+          * OPEN EVENT!!! * <br />
+          가입 시 사업자 전원에게 수수료 면제.
         </p>
       </form>
       <div class="actions">
@@ -53,14 +51,14 @@
       crossorigin="anonymous"
     ></script>
     <script>
-      function createUser() {
+      function createOwner() {
         const nickname = $("#inputNickname").val();
         const password1 = $("#inputPassword1").val();
         const password2 = $("#inputPassword2").val();
         const phone = $("#inputPhone").val();
         const address = $("#inputAddress").val();
-        const status = 0;
-        const point = 1000000;
+        const status = 1;
+        const point = 0;
 
         $.ajax({
           type: "POST",
@@ -71,26 +69,20 @@
             confirmPassword: password2,
             phone: phone,
             address: address,
-            status: 0
+            status: status,
+            point: point
           },
           success: function (response) {
-            customAlert("회원가입을 축하드립니다!", function () {
-              window.location.replace("/");
-            });
+            alert("회원가입을 축하드립니다!", 
+              window.location.href = "/"
+            );
           },
           error: function (error) {
-            customAlert(error.responseJSON.errorMessage);
+            alert(error.responseJSON.errorMessage);
           },
         });
       }
-      // function customAlert(text, confirmCallback) {
-      //   $("#alertText").text(text);
-      //   $("#alertModal").modal("show");
-      //   if (confirmCallback) {
-      //     $("#alertModal .btn-confirm").click(confirmCallback);
-      //   }
-      // }
+      
     </script>
-
 </body>
 </html>

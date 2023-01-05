@@ -1,0 +1,32 @@
+body .topnav {
+  background-color: skyblue;
+}
+body .topnav .nav-link {
+  padding-top: 5px;
+  color: white;
+}
+body .topnav .nav-link:hover{
+  color: royalblue;
+}
+body .topnav .nav .na-active {
+  background-color: #f6f5ef;
+  color: royalblue;
+}
+
+
+body .request {
+  background-color: #f6f5ef;
+  height: 1000px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+body .request .reqcontent {
+  /* background-color: royalblue; */
+  height: 80%;
+  width: 80%;
+  position: absolute;
+}
+
+
