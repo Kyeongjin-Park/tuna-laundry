@@ -4,12 +4,11 @@ const UserRepository = require('../repositories/users.repository');
 class UserService {
   userRepository = new UserRepository();
 
-  findAllUser = async (nickname) => {
+  findAllUser = async () => {
     // 저장소(Repository)에게 데이터를 요청합니다.
-    const allUser = await this.userRepository.findAllUser({ where: { nickname } });
+    const allUser = await this.userRepository.findAllUser();
 
     // 비즈니스 로직을 수행한 후 사용자에게 보여줄 데이터를 가공합니다.
-<<<<<<< HEAD
     return allUser.map((user) => {
       return {
         id: user.id,
@@ -19,18 +18,12 @@ class UserService {
         address: user.address
       }
     });
-=======
-    return  {
-        nickname: allUser.nickname,
-      };
->>>>>>> c4bcfad57c588d9415a29aa24c8915a979d7c063
   }
 
   findOneUser = async (nickname, password) => {
     
     const oneUser = await this.userRepository.findOneUser({ where: { nickname, password } });
 
-<<<<<<< HEAD
     return oneUser.map(user => {
       return {
         id: user.id,
@@ -40,15 +33,6 @@ class UserService {
         address: user.address
       }
     });
-=======
-    return {
-        userId: oneUser.userId,
-        nickname: oneUser.nickname,
-        password: oneUser.password,
-        phone: oneUser.phone,
-        address: oneUser.address
-      };
->>>>>>> c4bcfad57c588d9415a29aa24c8915a979d7c063
   }
 
   createUser = async (nickname, password, phone, address, status, point) => {

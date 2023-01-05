@@ -9,7 +9,7 @@ class UsersController {
 
   createUser = async (req, res, next) => {
     const { nickname, password, confirmPassword, phone, address, status, point } = req.body;
-
+    console.log(nickname,password, confirmPassword, phone, address, status, point)
     if (password !== confirmPassword) {
         res.status(400).send({
           errorMessage: "패스워드가 패스워드 확인란과 동일하지 않습니다.",
@@ -18,13 +18,14 @@ class UsersController {
       }
     
       const existUsers = await this.UserService.findAllUser();
-      if (existUsers.length) {
+      
+      if (existUsers) {
         res.status(400).send({
           errorMessage: "이미 가입된 닉네임이 있습니다.",
         });
         return;
       }
-
+    
     // 서비스 계층에 구현된 createPost 로직을 실행합니다.
     const createUserData = await this.UserService.createUser(nickname, password, phone, address, status, point);
 

@@ -9,7 +9,6 @@ class UserRepository {
   }
 
   findOneUser = async () => {
-    
     const user = await User.findOne();
     return user;
   }
