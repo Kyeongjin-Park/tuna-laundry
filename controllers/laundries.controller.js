@@ -24,7 +24,7 @@ class LaundriesController {
   }
   createLaundry = async(req, res, next) => {
     const {userId} = res.local.user
-    //로그인 방식에 따라 달라질 수 있음
+    // 로그인 방식에 따라 달라질 수 있음
     const {category,content,status,imageUrl} = req.body
     try {
       const createLaundryData = await this.LaundryService.createLaundries(category,content,status,imageUrl,userId)

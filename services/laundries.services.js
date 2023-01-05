@@ -3,8 +3,8 @@ const LaundryRepository = require("../repositories/laundries.repository");
 class LaundryService {
     laundryRepository = new LaundryRepository()
 
-    findAllLaundry = async (id) => {
-        const allLaundry = await this.laundryRepository.findAllLaundry(id)
+    findAllLaundry = async (userId) => {
+        const allLaundry = await this.laundryRepository.findAllLaundry(userId)
         allLaundry.sort((a, b) => {
             return b.updatedAt - a.updatedAt
         })
@@ -35,8 +35,8 @@ class LaundryService {
         };
     };
 
-    createLaundries = async (category,content,userId,status,imageUrl) => {
-        const createLaundry = await this.laundryRepository.createLaundry(category,content,userId,status,imageUrl);
+    createLaundries = async (category,content,status,imageUrl,userId) => {
+        const createLaundry = await this.laundryRepository.createLaundry(category,content,status,imageUrl,userId);
         return {
             id: createLaundry.null,
             category: createLaundry.category,
