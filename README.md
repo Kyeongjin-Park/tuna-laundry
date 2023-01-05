@@ -16,6 +16,32 @@ node_modules
 config.json
 ```
 
+### config/config.json
+```
+{
+  "development": {
+    "username": "root",
+    "password": "DB 패스워드",
+    "database": "DB 이름",
+    "host": "DB경로",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": null,
+    "database": "database_production",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}
+```
 
 ### 폴더 경로
 ```
