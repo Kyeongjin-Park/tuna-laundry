@@ -9,7 +9,6 @@ class UserService {
     const allUser = await this.userRepository.findAllUser({ where: { nickname } });
 
     // 비즈니스 로직을 수행한 후 사용자에게 보여줄 데이터를 가공합니다.
-    
       return {
         id: allUser.id,
         nickname: allUser.nickname,
@@ -20,13 +19,12 @@ class UserService {
         point: allUser.point
       }
     ;
+
   }
 
   findOneUser = async (nickname, password) => {
     
     const oneUser = await this.userRepository.findOneUser({ where: { nickname, password } });
-
-    
       return {
         id: oneUser.id,
         nickname: oneUser.nickname,

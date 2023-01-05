@@ -34,8 +34,8 @@ app.get("/usersmypage", function(req, res) {
     res.sendFile( __dirname + "/assets/templates/usersmypage.html");
 });
 
-
 app.use("/", [userRouter]);
+
 
 
 
