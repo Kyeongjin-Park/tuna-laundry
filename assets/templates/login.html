@@ -75,10 +75,10 @@
         },
         success: function (response) {
           localStorage.setItem("token", response.token);
-          window.location.replace("/usersluandry");
+          window.location.replace("/userslaundry");
         },
         error: function (error) {
-          customAlert(error.responseJSON.errorMessage);
+          alert(error.responseJSON.errorMessage);
         },
       });
     }
@@ -95,18 +95,14 @@
         },
         success: function (response) {
           localStorage.setItem("token", response.token);
-          window.location.replace("/ownersluandry");
+          window.location.replace("/ownerslaundry");
         },
         error: function (error) {
-          customAlert(error.responseJSON.errorMessage);
+          alert(error.responseJSON.errorMessage);
         },
       });
     }
 
-    function customAlert(text) {
-      $("#alertText").text(text);
-      $("#alertModal").modal("show");
-    }
   </script>
 </body>
 </html>
