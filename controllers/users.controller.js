@@ -43,7 +43,7 @@ class UsersController {
     return;
   }
 
-    const token = jwt.sign({ userId: user.userId }, "customized-secret-key", {expiresIn: new Date().getMinutes() + 50});
+    const token = jwt.sign({ userId: user.userId }, "customized-secret-key");
     console.log(token);
     res.send({
         token,
