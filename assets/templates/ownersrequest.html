@@ -8,8 +8,106 @@
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <link rel="stylesheet" href="../static/css/ownersrequest.css">
-
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <script>
+    let status = "수거 중"
+    let laundryId
+    $(document).ready(function(){
+      $('#detail').empty()
+      getLaundryBasket()
+      disabledSelectOption()
+      if(status == "배송 완료"){
+        getPoint()
+      }
+    })
+    function getLaundryBasket(){
+      $.ajax$.ajax({
+        type:"GET",
+        url:"/laundrybasket",
+        data:{},
+        async:false,
+        success:function(response){
+          let laundryinfo = response.data
+          laundryId = laundryinfo['laundryId']
+        }
+      })
+      $.ajax({
+        type:"GET",
+        url:"/mylaundrydetail/"+laundryId,
+        data:{},
+        async:false,
+        success:function(response){
+          let rows = response.data
+          let nickname = ""
+          let laundryId = rows['id']
+          let userId = rows['userId']
+          let content = rows['content']
+          let updateDate = rows['updatedAt']
+          let createDate = rows['createdAt']
+          status = rows['status']
+          let category = rows['category']
+          $.ajax({
+              type:"GET",
+              url:"/nickname",
+              data:{},
+              async:false,
+              success:function(response){
+                let whatElse = response.data
+                nickname = whatElse['nickname']
+              }
+          })
+          let temp = `<h5 class="card-title">닉네임 : ${nickname}</h5>
+                <p class="card-text">Content : ${category}</p>
+                <p class="card-text">Content : ${content}</p>
+                <p class="card-text"><small class="text-muted">Last updated : ${update}</small></p>
+                <p class="card-text"><small class="text-muted">Created : ${create}}</small></p><br>`
+          $('#info').append(temp)
+        }
+      })
+    }
+    function disabledSelectOption(){
+      if(status ==="수거중"){
+        $('#selectOptionStatus option:eq(0)').prop('seleted',true)
+        $('#selectOptionStatus option:eq(1)').prop('disabled',true)
+        $('#selectOptionStatus option:eq(2)').prop('disabled',true)
+      }else if(status ==="수거 완료"){
+        $('#selectOptionStatus option:eq(0)').prop('disabled',true)
+        $('#selectOptionStatus option:eq(1)').prop('seleted',true)
+        $('#selectOptionStatus option:eq(2)').prop('disabled',true)
+      }else if(status ==="배송 중"){
+        $('#selectOptionStatus option:eq(0)').prop('disabled',true)
+        $('#selectOptionStatus option:eq(1)').prop('seleted',true)
+        $('#selectOptionStatus option:eq(2)').prop('disabled',true)
+      }
+    }
+    function changeStatus(){
+      let target = document.getElementById('selectOptionStatus')
+      status = target.option[target.selectedIndex].text
+      $.ajax$.ajax({
+        type:"PUT",
+        url:"/laundrystatus/"+laundryId,
+        data:{status:status},
+        async:false,
+        success:function(response){
+          alert(response.message)
+          window.location.reload()
+        }
+      })
+    }
+    function getPoint(){
+      const point = 10000
+      $.ajax({
+        type:'PUT',
+        url:'/updatepoint',
+        data:{point:point},
+        success:function(response){
+          alert(response.message)
+        }
+      })
+    }
+  </script>
 </head>
+
 <body>
   <section class="topnav">
     <div>
@@ -51,20 +149,21 @@
           </div>
           <div class="col-md-8">
             <div class="card-body">
-              <h5 class="card-title">닉네임 : admin123</h5>
-            <p class="card-text">Content : 세탁물좀 빠르게 처리해주세요.</p>
-              <p class="card-text"><small class="text-muted">Last updated : 2023-01-03-23:59</small></p>
-              <p class="card-text"><small class="text-muted">Created : 2023-01-03-23:59</small></p>
-              
-              <select class="form-select" aria-label="Default select example">
-                <option>현재 상태를 선택해 주세요!</option>
+              <div id="detail">
+                <h5 class="card-title">닉네임 : admin123</h5>
+                <p class="card-text">Content : 세탁물좀 빠르게 처리해주세요.</p>
+                <p class="card-text"><small class="text-muted">Last updated : 2023-01-03-23:59</small></p>
+                <p class="card-text"><small class="text-muted">Created : 2023-01-03-23:59</small></p><br>
+              </div>
+              <div>현재 상태를 선택해 주세요!</div><br>
+              <select class="form-select" aria-label="Default select example" id="selectOptionStatus">
                 <option selected value="1">수거 완료</option>
-                <option value="2">배송 중</option>
+                <option value="2" disabled>배송 중</option>
                 <option value="3" disabled>배달 완료</option>
               </select>
-              <p/>
+            </p>
               <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <button class="btn btn-primary" type="button">상태 변경하기</button>
+                <button onclick="changeStatus()" class="btn btn-primary" type="button">상태 변경하기</button>
               </div>
 
             </div>

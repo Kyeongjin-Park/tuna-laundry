@@ -19,11 +19,20 @@ class UserRepository {
 
     return createUserData;
   }
-
+  updatePoint = async(userId,point)=>{
+    const updatePointData = await User.increment({point},{where:{userId}})
+    return updatePointData
+  }
+  findMyInfo = async (userId) => {
+    const myInfo = await User.findAll({where: {userId}})
+    return myInfo
+  }
+  myNickName = async (userId) =>{
+    const mynickname = await User.findAll({where:{userId}})
+    return mynickname
+  }
   updateUser = async (nickname, password, phone, address, status, point) => {
-    
     const updateUserData = await User.update({ nickname, password, phone, address, status, point });
-
     return updateUserData;
   }
 }

@@ -52,8 +52,34 @@ class UsersController {
     });
 
   }
-
-  postUser = async (req, res, next) => {
+  myInfo = async(req,res,next)=>{
+    const { userId } = res.locals.body
+    try{
+      const userInfo = await this.UserService.findMyInfo(userId)
+      res.json({data:userInfo})
+    }catch(error){
+      res.status(401).send({errorMessage:error})
+    }
+  }
+  myNickName = async(req,res,next) => {
+    const { userId } = req.body
+    try{
+      const mynickname = await this.UserService.myNickName(userId)
+      res.json({data:mynickname})
+    }catch(error){
+      res.status(401).send({errorMessage:error})
+    }
+  }
+  
+  updatePoint = async (req, res, next) => {
+    const { userId } = res.locals.body
+    const { point } = req.body
+    try{
+      await this.UserService.updatePoint(userId, point)
+      res.json({message:"포인트가 변경되었습니다."})
+    }catch(error){
+      res.status(401).send({errorMessage:error})
+    }
     
   }
 

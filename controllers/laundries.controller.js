@@ -4,7 +4,7 @@ class LaundriesController {
   LaundryService = new LaundryService();
   //손님
   getLaundries = async(req, res, next) => {
-    // const {userId} = res.local.user
+    // const {userId} = res.locals.user
     const {userId} = req.params
     try {
       const laundries = await this.LaundryService.findAllLaundry(userId)
@@ -24,7 +24,7 @@ class LaundriesController {
     }
   }
   createLaundry = async(req, res, next) => {
-    const {userId} = res.local.user
+    const {userId} = res.locals.user
     // 로그인 방식에 따라 달라질 수 있음
     const {category,content,status,imageUrl} = req.body
     try {
@@ -57,7 +57,7 @@ class LaundriesController {
   }
 
   getAbleReview = async(req,res,next)=>{
-    const {userId} = res.local.user
+    const {userId} = res.locals.user
     const status = "배송 완료"
     try {
       const laundries = await this.LaundryService.findAllLaundry(userId,status)
@@ -88,22 +88,8 @@ class LaundriesController {
   }
   updateLaundryStatus = async(req,res,next)=>{
     const {laundryId} = req.params
-    // let status = ""
     const {status} = req.body
     try{
-      // const laundryStatus = await this.LaundryService.findLaundryById(laundryId)
-      // if(laundryStatus==="대기 중"){
-      //   status = "수거 중"
-      // }
-      // if(laundryStatus==="수거 중"){
-      //   status = "수거 완료"
-      // }
-      // if(laundryStatus==="수거 완료"){
-      //   status = "배송 중"
-      // }
-      // if(laundryStatus==="배송 중"){
-      //   status = "배송 완료"
-      // }
       const laundry = await this.LaundryService.updateLaundryStatus(laundryId,status)
       res.json({data:laundry})
     }catch(error){

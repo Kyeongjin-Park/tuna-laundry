@@ -18,15 +18,23 @@
       const category = target.options[target.selectedIndex].text
       const content = document.getElementById('validationTextarea').value
       const imageUrl = 'https://edvocao.s3.ap-northeast-2.amazonaws.com/image/'+file.name
-      // const userId = 1
       const status = "대기 중"
       $.ajax({
           type:'POST',
           url:'/mylaundry',
-          data:{category:category,content:content,imageUrl:imageUrl,userId:userId,status:status},
+          data:{category:category,content:content,imageUrl:imageUrl,status:status},
           success:function(response){
             alert(response.message)
           }
+      })
+      const point = -10000
+      $.ajax({
+        type:'PUT',
+        url:'/updatepoint',
+        data:{point:point},
+        success:function(response){
+          alert(response.message)
+        }
       })
     }
   </script>

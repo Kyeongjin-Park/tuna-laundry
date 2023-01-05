@@ -11,44 +11,86 @@
   <link rel="stylesheet" href="../static/css/userslaundry.css">
   <script>
     $(document).ready(function(){
+      $('#info').empty()
+      $('#laundryinfo').empty()
+      getWhoCareMyLaundry()
       getMyLaundry()
       getMyInfo()
     })
     function getMyLaundry(){
-      $('#laundryinfo').empty()
       $.ajax({
         type:"GET",
         url:"/mylaundry/"+userId,
         data:{},
+        async:false,
         success:function(response){
-          rows = response.data
+          let rows = response.data
+          let nickname = ""
           for(let i = 0; i<rows.length;i++) {
-                        let laundryId = rows[i]['id']
-                        let content = rows[i]['content']
-                        let updateDate = rows[i]['updatedAt']
-                        let createDate = rows[i]['createdAt']
-                        let status = rows[i]['status']
-                        let temp_html = `<li class="list-group-item d-flex justify-content-between align-items-start">
+            let laundryId = rows[i]['id']
+            let content = rows[i]['content']
+            let updateDate = rows[i]['updatedAt']
+            let createDate = rows[i]['createdAt']
+            let category = rows[i]['category']
+            let status = rows[i]['status']
+            if(status = "대기 중"){
+              nickname = "아직 없어용"
+            }else{
+              $.ajax({
+                  type:"GET",
+                  url:"/laundrybasket",
+                  data:{laundryId:laundryId},
+                  async:false,
+                  success:function(response){
+                    let someUserInfomation = response
+                    let someUserInfo = someUserInfomation['userId']
+                    $.ajax({
+                      type:"GET",
+                      url:"/nickname",
+                      data:{userId:someUserInfo},
+                      async:false,
+                      success:function(response){
+                        let rows = response.data
+                        nickname = rows['nickname']
+                      }
+                    })
+                  }
+              })
+            }
+            let temp_html = `<li class="list-group-item d-flex justify-content-between align-items-start">
         <div class="ms-2 me-auto">
+          <div class="fw-bold">${nickname}</div>
+          <div>${category}</div>
           <div>${content}</div> 
           <div>업데이트일 : ${updateDate}</div>
           <div>신청일 : ${createDate}</div>
         </div>
         <span class="badge bg-primary rounded-pill">${status}</span>
       </li>`
-                        $('#laundryinfo').append(temp_html)
-                    }
+            $('#laundryinfo').append(temp_html)
+          }
         }
       })
     }
-    // function getMyInfo(){
-    //   $('#myInfo').empty()
-    //   let userId = 1
-    //   $.ajax({
-    //     type:"GET",
-    //     url:"/"
-    //   })
-    // }
+    function getMyInfo(){
+      $.ajax({
+        type:"GET",
+        url:"/myinfo",
+        data:{},
+        async:false,
+        success:function(response){
+          let nickname = rows['nickname']
+          let point = rows['point']
+          let address = rows['address']
+          let phone = rows['phone']
+          let temp = `<li class="list-group-item">닉네임 : ${nickname}</li>
+          <li class="list-group-item">포인트 : ${point}</li>
+          <li class="list-group-item">업소명 : ${address}</li>
+          <li class="list-group-item">휴대폰 : ${phone}</li>`
+          $('#info').append(temp)
+        }
+      })
+    }
   </script>
 </head>
 <body>
@@ -83,12 +125,14 @@
         <div class="card-header">
           사용자 정보
         </div>
-        <ul class="list-group list-group-flush" id = "myInfo">
-          <li class="list-group-item">닉네임 : 마구로 사장님</li>
-          <li class="list-group-item">포인트 : 560,000</li>
-          <li class="list-group-item">업소명 : 원데이 참치 세탁소</li>
-          <li class="list-group-item">휴대폰 : 010-1234-5678</li>
-        </ul>
+        <div  class = "info" id = "info">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">닉네임 : 마구로 사장님</li>
+            <li class="list-group-item">포인트 : 560,000</li>
+            <li class="list-group-item">업소명 : 원데이 참치 세탁소</li>
+            <li class="list-group-item">휴대폰 : 010-1234-5678</li>
+          </ul>
+        </div>
       </div>
     </div>
   </section>
@@ -98,15 +142,18 @@
       <li class="list-group-item d-flex justify-content-between align-items-start">
         <div class="ms-2 me-auto">
           <div class="fw-bold">마구로 사장님</div>
+          <div>의류</div>
           <div>(긴급) 옷좀 빨아주세요!</div> 
           <div>업데이트일 : 2019-08-25 12:36:09</div>
           <div>신청일 : 2019-08-25 12:36:09</div>
         </div>
         <span class="badge bg-primary rounded-pill">배송중</span>
       </li>
+      
       <li class="list-group-item d-flex justify-content-between align-items-start">
         <div class="ms-2 me-auto">
           <div class="fw-bold">마구로 사장님</div>
+          <div>의류</div>
           <div>(긴급) 앞치마 세탁좀요!</div> 
           <div>업데이트일 : 2019-08-25 12:36:09</div>
           <div>신청일 : 2019-08-25 12:36:09</div>
@@ -116,6 +163,7 @@
       <li class="list-group-item d-flex justify-content-between align-items-start">
         <div class="ms-2 me-auto">
           <div class="fw-bold">마구로 사장님</div>
+          <div>의류</div>
           <div>(중요) 정장 세탁해주세요!!</div> 
           <div>업데이트일 : 2019-08-25 12:36:09</div>
           <div>신청일 : 2019-08-25 12:36:09</div>

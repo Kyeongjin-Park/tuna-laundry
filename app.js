@@ -23,7 +23,7 @@ app.use(express.static(__dirname + "/assets"));
 //   res.send("./assets/templates/login.html");
 // });
 app.get("/", function(req, res) {
-    res.sendFile( __dirname + "/assets/templates/userslaundry.html");
+    res.sendFile( __dirname + "/assets/templates/login.html");
 });
 app.get("/usersignup", function(req, res) {
     res.sendFile( __dirname + "/assets/templates/usersignup.html");
@@ -35,13 +35,7 @@ app.get("/usersmypage", function(req, res) {
     res.sendFile( __dirname + "/assets/templates/usersmypage.html");
 });
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 app.use("/", [laundryRouter])
-=======
->>>>>>> 744dfa0bf31f032bbabd015929f3ae420479313b
-=======
->>>>>>> 744dfa0bf31f032bbabd015929f3ae420479313b
 app.use("/", [userRouter]);
 
 

@@ -53,7 +53,28 @@ class UserService {
       point: createUserData.point
     };
   }
-
+  updatePoint = async(userId,point)=>{
+    const updatePointData = await this.userRepository.updatePoint(userId,point)
+    return {
+      id: updatePointData.id,
+      point: updatePointData.point,
+    }
+  }
+  findMyInfo = async (userId) => {
+    const userInfo = await this.userRepository.findMyInfo(userId)
+    return {
+      id: userInfo.id,
+      nickname: userInfo.nickname,
+      phone: userInfo.phone,
+      address: userInfo.address
+    }
+  }
+  myNickName = async(userId) => {
+    const mynickname = await this.userRepository.myNickName(userId)
+    return {
+      nickname : mynickname.nickname
+    }
+  }
   updateUser = async ( password, phone, address) => {
     // 저장소(Repository)에게 데이터를 요청합니다.
     const updateUserData = await this.userRepository.updateUser( password, phone, address);

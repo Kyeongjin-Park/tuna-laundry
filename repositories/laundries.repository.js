@@ -18,7 +18,8 @@ class LaundryRepository{
     }
 
     updateLaundry = async (id,category,content,imageUrl) => {
-        const updateLaundryData = await Laundry.update({category,content,imageUrl},{ where: { id } });
+        let update = new Date()
+        const updateLaundryData = await Laundry.update({category,content,imageUrl,update},{ where: { id } });
         return updateLaundryData
     }
 
@@ -36,7 +37,8 @@ class LaundryRepository{
         return laundries
     }
     updateLaundryStatus = async (laundryId,status) => {
-        const updatingLaundryStatus = await Laundry.update({status},{where:{laundryId}})
+        let update = new Date()
+        const updatingLaundryStatus = await Laundry.update({status,update},{where:{laundryId}})
         return updatingLaundryStatus
     }
 }

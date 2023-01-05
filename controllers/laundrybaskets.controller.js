@@ -2,14 +2,20 @@ const LaundryBasketService = require("../services/laundrybaskets.services");
 
 class LaundryBasketsController {
   LaundryBasketService = new LaundryBasketService();
-  // getAllLaundryBasket = async(req,res,next) => {
-  //   const laundrybasket = await this.LaundryBasketService.findAllLaundryBasket()
-  //   res.json({data:laundrybasket})
-  // }
-  getLaundryBasket = async(req,res,next) =>{
-    const {userId} = res.local.user
+
+  getLaundryBasket = async(req,res,next) => {
+    const {userId} = res.locals.user
     try{
-        const user = await this.LaundryBasketService.findLaundryBasket(userId)
+      const laundry = await this.LaundryBasketService.findMyLaundryBasket(userId)
+      res.json({data:laundry})
+    }catch(error){
+      res.status(401).send({errorMessage:error})
+    }
+  }
+  getMyLaundryBasket = async(req,res,next) =>{
+    const {userId} = res.locals.user
+    try{
+        const user = await this.LaundryBasketService.findMylaundryBasket(userId)
         res.json({data:user})
     }catch(error){
         res.status(401).send({errorMessage:error})
@@ -17,8 +23,8 @@ class LaundryBasketsController {
   }
 
   createLaundryBasket = async(req,res,next)=>{
-    const {userId} = res.local.user
-    const {laundryId} = req.params
+    const {userId} = res.locals.user
+    const {laundryId} = req.body
     try{
         const createLaundryBasketData = await this.LaundryBasketService.createLaundryBakset(userId,laundryId)
         res.json({data:createLaundryBasketData})

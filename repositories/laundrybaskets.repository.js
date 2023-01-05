@@ -1,12 +1,12 @@
 const { LaundryBasket } = require("../models");
 
 class LaundryBasketRepository{
-    // findAllLaundrybasket = async()=>{
-    //     const laundrybasket = await LaundryBasket.findAll()
-    //     return laundrybasket
-    // }
-    findLaundry = async(laundryId)=>{
-        const laundry = await LaundryBasket.findAll({where:{laundryId}});
+    findLaundryBasket = async(userId)=>{
+        const laundry = await LaundryBasket.findAll({where:{userId}})
+        return laundry
+    }
+    findMyLaundry = async(userId)=>{
+        const laundry = await LaundryBasket.findAll({where:{userId}});
         return laundry
     }
 

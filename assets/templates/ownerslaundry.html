@@ -7,8 +7,101 @@
   <title>참치세탁소 - 관리자용</title>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
   <link rel="stylesheet" href="../static/css/ownerslaundry.css">
-
+  <script>
+    $(document).ready(function(){
+      $('#info').empty()
+      $('#laundryinfo').empty()
+      getWaitingLaundry()
+      getMyInfo()
+    })
+    function getWaitingLaundry(){
+      $.ajax({
+        type:"GET",
+        url:"/waitinglaundries",
+        data:{},
+        async:false,
+        success:function(response){
+          let rows = response.data
+          for(let i = 0; i<rows.length;i++) {
+            let nickname = ""
+            let laundryId = rows[i]['id']
+            let userId = rows[i]['userId']
+            let content = rows[i]['content']
+            let updateDate = rows[i]['updatedAt']
+            let createDate = rows[i]['createdAt']
+            let status = rows[i]['status']
+            $.ajax({
+              type:"GET",
+              url:"/nickname",
+              data:{},
+              async:false,
+              success:function(response){
+                let whatElse = response.data
+                nickname = whatElse['nickname']
+              }
+            })
+            let temp_html = `    <li class="list-group-item d-flex justify-content-between align-items-start">
+      <div class="ms-2 me-auto">
+        <div class="fw-bold">${nickname}</div>
+        <div>${category}</div>
+        <div>${content}</div> 
+        <div>업데이트일 : ${updateDate}</div>
+        <div>신청일 : ${createDate}</div>
+      </div>
+    <span class="badge bg-primary rounded-pill"><button style="border: none;background-color:transparent;color:white;" onclick="getBasket(${laundryId})"></button></span>`
+            $('#laundryinfo').append(temp_html)
+          }
+        }
+      })
+    }
+    function getMyInfo(){
+      $.ajax({
+        type:"GET",
+        url:"/myinfo",
+        data:{},
+        async:false,
+        success:function(response){
+          let nickname = rows['nickname']
+          let point = rows['point']
+          let address = rows['address']
+          let phone = rows['phone']
+          let temp = `<li class="list-group-item">닉네임 : ${nickname}</li>
+          <li class="list-group-item">포인트 : ${point}</li>
+          <li class="list-group-item">업소명 : ${address}</li>
+          <li class="list-group-item">휴대폰 : ${phone}</li>`
+          $('#info').append(temp)
+        }
+      })
+    }
+    function getBasket(laundryId){
+      if(confirm("수거 하시겠습니까?")==true){
+        $.ajax({
+          type:"POST",
+          url:"/laundrybasket",
+          async:false,
+          data:{laundryId:laundryId},
+          success:function(response){
+            alert(response.message)
+          }
+        })
+        let status = "수거 중"
+        $.ajax({
+          type:"PUT",
+          url:"/laundrystatus"+laundryId,
+          data:{status:status},
+          async:false,
+          success:function(response){
+            alert(response.message)
+            window.location.reload()
+          }
+        })
+      }else{
+        return false;
+      }
+    }
+  </script>
 </head>
 <body>
   <section class="topnav">
@@ -35,14 +128,16 @@
       </li>
     </ul>
   </section>
+  
 
+  </li>
   <section class="myinfo">
     <div class="infobox">
       <div class="card" style="width: 18rem;">
         <div class="card-header">
           사용자 정보
         </div>
-        <ul class="list-group list-group-flush">
+        <ul class="list-group list-group-flush" id="info">
           <li class="list-group-item">닉네임 : 마구로 사장님</li>
           <li class="list-group-item">포인트 : 560,000</li>
           <li class="list-group-item">업소명 : 원데이 참치 세탁소</li>
@@ -53,7 +148,7 @@
   </section>
 
   <section class="laundryinfo">
-    <ol class="list-group list-group-numbered">
+    <ol class="list-group list-group-numbered" id="laundryinfo">
       <li class="list-group-item d-flex justify-content-between align-items-start">
         <div class="ms-2 me-auto">
           <div class="fw-bold">닉네임</div>
@@ -61,7 +156,7 @@
           <div>업데이트일 : 2019-08-25 12:36:09</div>
           <div>신청일 : 2019-08-25 12:36:09</div>
         </div>
-        <span class="badge bg-primary rounded-pill">배송중</span>
+        <span class="badge bg-primary rounded-pill"><input style="border: none;background-color:transparent;color:white;" type="button" value="수거 하기" onclick="getBasket()"></span>
       </li>
       <li class="list-group-item d-flex justify-content-between align-items-start">
         <div class="ms-2 me-auto">
@@ -75,7 +170,6 @@
           <div class="fw-bold">Subheading</div>
           Cras justo odio
         </div>
-        <span class="badge bg-primary rounded-pill">대기중</span>
       </li>
     </ol>
   </section>
