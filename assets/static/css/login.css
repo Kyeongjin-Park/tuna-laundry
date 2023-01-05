@@ -44,7 +44,7 @@
   box-sizing: border-box;
   font-size: 14px;
 }
-.signin__card form [type="submit"] {
+.signin__card form [type="button"] {
   background-color: royalblue;
   border: none;
   color: #fff;

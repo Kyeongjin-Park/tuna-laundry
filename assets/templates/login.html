@@ -8,7 +8,6 @@
   <title>로그인</title>
 
   <link rel="stylesheet" href="../static/css/login.css">
-  <script defer src="../static/js/login.js"></script>
 
 </head>
 <body>
@@ -19,22 +18,18 @@
     <div class="signin__card">
       <h2><strong>Welcome!</strong> 참치세탁소에 오신 것을 환영합니다.</h2>
       <form>
-        <input type="text" placeholder="아이디를 입력하세요." />
-        <input type="password" placeholder="비밀번호를 입력하세요." />
-        <button
-                type="button"
-                onclick="sign_in()"
-        >
-                로그인
-        </button>
-        <input type="submit" value="사업자 로그인" />
+        <input type="text" id="inputnickname" placeholder="아이디를 입력하세요." />
+        <input type="password" id="inputPassword" placeholder="비밀번호를 입력하세요." />
+        <input type="button" onclick="sign_in()" value="로그인" />
+        <input type="button" onclick="signin()" value="사업자 로그인" />
         <p>
           * 비밀번호를 타 사이트와 같이 사용할 경우 도용 위험이 있으니,<br />
           정기적으로 비밀번호를 변경하세요!
         </p>
       </form>
       <div class="actions">
-        <a href="/signup">회원가입</a>
+        <a href="/usersignup">회원가입</a>
+        <a href="/ownersignup">사업자 회원가입</a>
       </div>
     </div>
   </section>
@@ -56,12 +51,17 @@
     ></script>
 
   <script>
-    if (localStorage.getItem("token")) {
-      getSelf(function () {
-        alert("이미 로그인이 되어있습니다. 메인 페이지로 이동합니다.");
-        window.location.replace("/laundry");
-      });
-    }
+    // if (localStorage.getItem("token")) {
+    //   getSelf(function () {
+    //     alert("이미 로그인이 되어있습니다. 메인 페이지로 이동합니다.");
+    //     try {
+    //       window.location.replace("/userslaundry");
+    //     } catch (error) {
+    //       window.location.replace("/ownerslaundry");
+    //     }
+        
+    //   });
+    // }
 
     function sign_in() {
       let nickname = $("#inputnickname").val();
@@ -75,7 +75,27 @@
         },
         success: function (response) {
           localStorage.setItem("token", response.token);
-          window.location.replace("/luandry");
+          window.location.replace("/usersluandry");
+        },
+        error: function (error) {
+          customAlert(error.responseJSON.errorMessage);
+        },
+      });
+    }
+
+    function signin() {
+      let nickname = $("#inputnickname").val();
+      let password = $("#inputPassword").val();
+      $.ajax({
+        type: "POST",
+        url: "/login",
+        data: {
+          nickname: nickname,
+          password: password,
+        },
+        success: function (response) {
+          localStorage.setItem("token", response.token);
+          window.location.replace("/ownersluandry");
         },
         error: function (error) {
           customAlert(error.responseJSON.errorMessage);
