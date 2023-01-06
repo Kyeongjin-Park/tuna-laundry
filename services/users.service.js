@@ -1,4 +1,3 @@
-const { User } = require('../models');
 const UserRepository = require('../repositories/users.repository');
 
 class UserService {
@@ -25,17 +24,15 @@ class UserService {
   findOneUser = async (nickname, password) => {
     
     const oneUser = await this.userRepository.findOneUser(nickname, password);
-
-    
-      return {
-        id: oneUser.id,
-        nickname: oneUser.nickname,
-        password: oneUser.password,
-        phone: oneUser.phone,
-        address: oneUser.address,
-        status: oneUser.status,
-        point: oneUser.point
-      };
+    return {
+      id: oneUser.id,
+      nickname: oneUser.nickname,
+      password: oneUser.password,
+      phone: oneUser.phone,
+      address: oneUser.address,
+      status: oneUser.status,
+      point: oneUser.point
+    };
   }
 
   createUser = async (nickname, password, phone, address, status, point) => {

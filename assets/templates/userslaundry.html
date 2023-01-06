@@ -10,18 +10,30 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
   <link rel="stylesheet" href="../static/css/userslaundry.css">
   <script>
+    let user
+    // let authorization = 
     $(document).ready(function(){
-      $('#info').empty()
-      $('#laundryinfo').empty()
-      getWhoCareMyLaundry()
+      // $('#info').empty()
+      // $('#laundryinfo').empty()
+      // getSelf()
       getMyLaundry()
       getMyInfo()
     })
+    function getSelf(){
+      $.ajax({
+        type:"GET",
+        url:"/userme",
+        headers:{authorization: `Bearer ${localStorage.getItem("token")}`},
+        success:function(response){
+          console.log(response)
+        }
+      })
+    }
     function getMyLaundry(){
       $.ajax({
         type:"GET",
-        url:"/mylaundry/"+userId,
-        data:{},
+        url:"/mylaundry",
+        headers:{authorization: `Bearer ${localStorage.getItem("token")}`},
         async:false,
         success:function(response){
           let rows = response.data
@@ -77,6 +89,7 @@
         type:"GET",
         url:"/myinfo",
         data:{},
+        headers:{authorization: `Bearer ${localStorage.getItem("token")}`},
         async:false,
         success:function(response){
           let nickname = rows['nickname']
@@ -91,6 +104,17 @@
         }
       })
     }
+    function laundryRequest(){
+      $.ajax({
+        type:"GET",
+        url:"/laundryrequest",
+        headers:{authorization:`Bearer ${localStorage.getItem("token")}`},
+        async:false,
+        success:function(response){
+          window.location.replace("/laundryrequest")
+        }
+      })
+    }
   </script>
 </head>
 <body>
@@ -99,7 +123,7 @@
       참치세탁소
     <ul class="nav nav-tabs justify-content-end">
       <li class="nav-item">
-        <a class="na-active nav-link active" aria-current="page" href="#">세탁물 목록</a>
+        <a class="na-active nav-link active" aria-current="page" onclick="laundryRequest()">세탁물 목록</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">나의 세탁</a>

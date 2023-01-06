@@ -4,8 +4,7 @@ class LaundriesController {
   LaundryService = new LaundryService();
   //손님
   getLaundries = async(req, res, next) => {
-    // const {userId} = res.locals.user
-    const {userId} = req.params
+    const {userId} = res.locals.user
     try {
       const laundries = await this.LaundryService.findAllLaundry(userId)
       res.json({data:laundries})

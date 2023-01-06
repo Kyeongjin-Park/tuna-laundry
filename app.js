@@ -1,5 +1,6 @@
 // 패키지 불러오기
 const express = require("express");
+const authMiddleware = require("./middlewares/auth-middleware");
 const app = express();
 app.use(express.urlencoded({ extended: false }));
 
@@ -23,6 +24,12 @@ app.use(express.static(__dirname + "/assets"));
 app.get("/", function(req, res) {
     res.sendFile( __dirname + "/assets/templates/login.html");
 });
+app.get("/userslaundry",function(req,res){
+    res.sendFile(__dirname + "/assets/templates/userslaundry.html" )
+})
+app.get("/laundryrequest",authMiddleware,function(req,res){
+    res.sendFile(__dirname + "/assets/templates/laundryrequest.html" )
+})
 app.get("/usersignup", function(req, res) {
     res.sendFile( __dirname + "/assets/templates/usersignup.html");
 });

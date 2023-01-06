@@ -2,6 +2,7 @@
 const { User } = require('../models');
 
 class UserRepository {
+
   findAllUser = async (nickname) => {
     // ORM인 Sequelize에서 Posts 모델의 findAll 메소드를 사용해 데이터를 요청합니다.
     const allUser = await User.findAll({where: {nickname:nickname}});
@@ -9,8 +10,8 @@ class UserRepository {
   }
 
   findOneUser = async (nickname, password) => {
-    const oneUser = await User.findOne({where: {nickname:nickname, password:password}});
-    return oneUser;
+    const user = await User.findOne({where:{nickname, password}});
+    return user;
   }
 
   createUser = async (nickname, password, phone, address, status, point) => {
