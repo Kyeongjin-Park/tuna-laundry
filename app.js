@@ -7,6 +7,7 @@ app.use(express.urlencoded({ extended: false }));
 // router불러오기
 const userRouter = require("./routes/users.routes");
 const laundryRouter = require("./routes/laundries.routes")
+const laundrybasketRouter = require("./routes/laundrybaskets.routes")
 // .env 사용
 // config() 설정이나 프로그램의 실행 일부 등을 저장해둔 파일.
 require("dotenv").config();
@@ -30,6 +31,9 @@ app.get("/userslaundry",function(req,res){
 app.get("/laundryrequest",authMiddleware,function(req,res){
     res.sendFile(__dirname + "/assets/templates/laundryrequest.html" )
 })
+app.get("/ownersrequest",authMiddleware,function(req,res){
+    res.sendFile(__dirname + "/assets/templates/ownersrequest.html" )
+})
 app.get("/usersignup", function(req, res) {
     res.sendFile( __dirname + "/assets/templates/usersignup.html");
 });
@@ -39,11 +43,20 @@ app.get("/ownersignup", function(req, res) {
 app.get("/usersmypage", function(req, res) {
     res.sendFile( __dirname + "/assets/templates/usersmypage.html");
 });
+app.get("/ownerslaundry", function(req, res) {
+    res.sendFile( __dirname + "/assets/templates/ownerslaundry.html");
+});
+app.get("/usersreview", function(req, res) {
+    res.sendFile( __dirname + "/assets/templates/usersreview.html");
+});
+app.get("/writereview", function(req, res) {
+    res.sendFile( __dirname + "/assets/templates/writereview.html");
+});
 
 app.use("/", [laundryRouter])
 app.use("/", [userRouter]);
 
-app.use("/", [userRouter, laundryRouter]);
+app.use("/", [userRouter, laundryRouter, laundrybasketRouter]);
 
 
 

@@ -102,6 +102,12 @@
       }
     }
   </script>
+    <script>
+      function signOut() {
+      localStorage.clear();
+      window.location.href = "/";
+      }
+    </script>
 </head>
 <body>
   <section class="topnav">
@@ -112,16 +118,16 @@
         <a class="na-active nav-link active" aria-current="page" href="#">세탁물 목록</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">나의 세탁</a>
+        <a class="nav-link" href="/ownersrequest">나의 세탁</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">리뷰페이지</a>
+        <a class="nav-link" href="/writereview">리뷰페이지</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">마이페이지</a>
+        <a class="nav-link" href="/usersmypage">마이페이지</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">로그아웃</a>
+        <a class="nav-link" onclick="signOut()">로그아웃</a>
       </li>
       <li class="nav-item">
         <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"></a>
